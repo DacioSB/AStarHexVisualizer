@@ -4,8 +4,8 @@
              x:Class="AStarHexVisualizer.MainPage"
              Title="A* Hex Visualizer">
 
-    <Label Text="A* Hex Visualizer — Coming Soon"
-           HorizontalOptions="Center"
-           VerticalOptions="Center" />
+       <Label Text="A* Hex Visualizer — Coming Soon"
+              HorizontalOptions="Center"
+              VerticalOptions="Center" />
 
 </ContentPage>
