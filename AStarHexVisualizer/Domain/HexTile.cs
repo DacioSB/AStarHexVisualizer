@@ -75,4 +75,17 @@ public class HexTile
     public bool IsWalkable => Type != TileType.Rock;
 
     public override string ToString() => $"HexTile({Col},{Row}) Type={Type} F={F:F1} G={G:F1} H={H:F1}";
+
+    /// <summary>
+    /// Returns the movement cost to enter this tile.
+    /// </summary>
+    public double MovementCost => Type switch
+    {
+        TileType.Empty => MovementCosts.Empty,
+        TileType.Slime => MovementCosts.Slime,
+        TileType.Rock  => MovementCosts.Rock,
+        TileType.Start => MovementCosts.Start,
+        TileType.Goal  => MovementCosts.Goal,
+        _ => throw new InvalidOperationException($"Unknown tile type: {Type}")
+    };
 }
