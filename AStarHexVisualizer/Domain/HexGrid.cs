@@ -42,7 +42,7 @@ public class HexGrid
     /// <summary>
     /// Sets the type of a tile and tracks Start/Goal references.
     /// </summary>
-    public void SetFileType(int col, int row, TileType type)
+    public void SetTileType(int col, int row, TileType type)
     {
         var tile = GetTile(col, row) ?? throw new ArgumentOutOfRangeException($"Tile coordinates ({col}, {row}) are out of bounds.");
 
