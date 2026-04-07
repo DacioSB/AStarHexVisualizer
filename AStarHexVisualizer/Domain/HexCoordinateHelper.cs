@@ -36,8 +36,6 @@ public static class HexCoordinateHelper
         ( 0, -1),  // NorthWest
     ];
 
-    // ── Public API ────────────────────────────────────────────
-
     /// <summary>
     /// Returns all valid neighbor tiles of the given tile within the grid bounds.
     /// Skips neighbors that fall outside the grid — no null entries in the result.
@@ -74,8 +72,6 @@ public static class HexCoordinateHelper
     /// </summary>
     public static int CountNeighbors(HexTile tile, HexGrid grid)
         => GetNeighbors(tile, grid).Count();
-
-    // ── Private helpers ───────────────────────────────────────
 
     private static bool IsOddRow(int row) => (row % 2) != 0;
 }
