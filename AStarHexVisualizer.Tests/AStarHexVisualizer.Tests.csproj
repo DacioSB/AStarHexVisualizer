@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <Compile Include="..\AStarHexVisualizer\Domain\*.cs" />
+    <Compile Include="..\AStarHexVisualizer\Algorithm\*.cs" />
   </ItemGroup>
 
 </Project>
