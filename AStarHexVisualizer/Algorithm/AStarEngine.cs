@@ -18,7 +18,6 @@ public class AStarEngine
     // ── State ─────────────────────────────────────────────────
 
     private HexGrid?   _grid;
-    private HexTile?   _start;
     private HexTile?   _goal;
 
     private readonly List<HexTile> _openList   = [];
@@ -45,7 +44,6 @@ public class AStarEngine
     public void Initialize(HexGrid grid, HexTile start, HexTile goal)
     {
         _grid  = grid;
-        _start = start;
         _goal  = goal;
 
         _openList.Clear();
@@ -75,18 +73,74 @@ public class AStarEngine
     /// </summary>
     public StepResult Step()
     {
-        if (!_isInitialized) throw new InvalidOperationException("Initialize() must be called first.");
-        if (_isFinished) return BuildResult(null, []);
+        if (!_isInitialized)
+            throw new InvalidOperationException(
+                "Call Initialize() before Step().");
 
+        // Already done — return the terminal state
+        if (_isFinished)
+            return BuildResult(currentTile: null, updatedTiles: []);
+
+        // ── No path exists ────────────────────────────────────
         if (_openList.Count == 0)
         {
             _isFinished = true;
             _pathFound  = false;
-            return BuildResult(null, []);
+            return BuildResult(currentTile: null, updatedTiles: []);
         }
 
-        HexTile current = PopLowestCost();
-        return null;
+        // ── Pop lowest-F tile ─────────────────────────────────
+        var current = PopLowestCost();
+        var updatedTiles = new List<HexTile> { current };
+
+        // Move to closed list
+        current.IsInOpenList = false;
+        current.IsVisited    = true;
+        current.State        = TileState.Closed;
+        _closedList.Add(current);
+
+        // ── Goal check ────────────────────────────────────────
+        if (current == _goal)
+        {
+            _isFinished = true;
+            _pathFound  = true;
+
+            var path = ReconstructPath(current);
+            return BuildResult(current, updatedTiles, path);
+        }
+
+        // ── Evaluate neighbors ────────────────────────────────
+        var neighbors = HexCoordinateHelper
+            .GetNeighbors(current, _grid!)
+            .Where(n => !n.IsVisited)
+            .Where(n => MovementCostProvider.IsPassable(n.Type));
+
+        foreach (var neighbor in neighbors)
+        {
+            var tentativeG = current.G
+                + MovementCostProvider.GetCost(neighbor.Type);
+
+            // Found a cheaper route to this neighbor
+            if (tentativeG < neighbor.G)
+            {
+                neighbor.Parent      = current;
+                neighbor.G           = tentativeG;
+                neighbor.H           = HeuristicCalculator
+                                          .Calculate(neighbor, _goal!);
+                neighbor.State       = TileState.Open;
+                neighbor.IsInOpenList = true;
+
+                if (!_openList.Contains(neighbor))
+                    _openList.Add(neighbor);
+
+                updatedTiles.Add(neighbor);
+            }
+        }
+
+        // Keep open list sorted by F ascending
+        _openList.Sort((a, b) => a.F.CompareTo(b.F));
+
+        return BuildResult(current, updatedTiles);
     }
 
     // ── Path Reconstruction ───────────────────────────────────
