@@ -27,7 +27,9 @@
   <ItemGroup>
     <Compile Include="..\AStarHexVisualizer\Domain\*.cs" />
     <Compile Include="..\AStarHexVisualizer\Algorithm\*.cs" />
-    <Compile Include="..\AStarHexVisualizer\Rendering\*.cs" />
+    <Compile Include="..\AStarHexVisualizer\Rendering\HexGeometryHelper.cs" />
+    <Compile Include="..\AStarHexVisualizer\Rendering\HexPoint.cs" />
+    <Compile Include="..\AStarHexVisualizer\Rendering\HexSize.cs" />
   </ItemGroup>
 
 </Project>
