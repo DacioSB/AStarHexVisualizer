@@ -1,3 +1,5 @@
+using AStarHexVisualizer.Domain;
+
 namespace AStarHexVisualizer.Rendering;
 
 /// <summary>
@@ -30,4 +32,36 @@ public static class TileColors
     // ── Highlight (current step) ──────────────────────────────
     public static readonly Color ActiveStroke  = Color.FromArgb("#FFFFFF");
     public static readonly Color PathStroke    = Color.FromArgb("#F0C040");
+
+    /// <summary>
+    /// Returns the correct fill color for a tile based on its
+    /// type and current algorithm state.
+    /// </summary>
+    public static Color GetFill(HexTile tile) => tile.Type switch
+    {
+        TileType.Start => Start,
+        TileType.Goal => Goal,
+        TileType.Rock => Rock,
+        TileType.Slime => tile.State switch
+        {
+            TileState.Open => SlimeActive,
+            TileState.Closed => SlimeActive,
+            TileState.FinalPath => FinalPath,
+            _ => SlimeUnvisited
+        },
+        _ => tile.State switch
+        {
+            TileState.Open => OpenList,
+            TileState.Closed => ClosedList,
+            TileState.FinalPath => FinalPath,
+            _ => Unvisited
+        }
+    };
+
+    /// <summary>
+    /// Returns the stroke color for a tile.
+    /// Highlighted tiles (active step) get a bright white border.
+    /// Path tiles get a gold border.
+    /// </summary>
+    public static Color GetStroke(HexTile tile, bool isSelected) => isSelected ? ActiveStroke : tile.IsOnFinalPath ? PathStroke : TileStroke;
 }
