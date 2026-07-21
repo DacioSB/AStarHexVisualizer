@@ -2,10 +2,25 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="AStarHexVisualizer.MainPage"
-             Title="A* Hex Visualizer">
+             Title="A* Hex Visualizer"
+             BackgroundColor="#1A1A2E">
 
-       <Label Text="A* Hex Visualizer — Coming Soon"
-              HorizontalOptions="Center"
-              VerticalOptions="Center" />
+       <Grid ColumnDefinitions="*, 280">
+            <GraphicsView
+              x:Name="HexCanvas"      
+              Grid.Column="0"    
+              BackgroundColor="#1A1A2E"
+             />
+             <Border Grid.Column="1"
+                BackgroundColor="#12122A"
+                Stroke="#2D2D44"
+                StrokeThickness="1"
+                Margin="0">
+            <Label Text="Controls — Task 4"
+                   TextColor="#A0A8C0"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center" />
+        </Border>
+       </Grid>
 
 </ContentPage>
