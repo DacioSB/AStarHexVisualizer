@@ -5,22 +5,26 @@
              Title="A* Hex Visualizer"
              BackgroundColor="#1A1A2E">
 
-       <Grid ColumnDefinitions="*, 280">
+       <Grid ColumnDefinitions="*, 280" RowDefinitions="*">
             <GraphicsView
               x:Name="HexCanvas"      
-              Grid.Column="0"    
+              Grid.Column="0"
+              Grid.Row="0"    
               BackgroundColor="#1A1A2E"
+              HorizontalOptions="Fill"
+              VerticalOptions="Fill"
              />
-             <Border Grid.Column="1"
-                BackgroundColor="#12122A"
-                Stroke="#2D2D44"
-                StrokeThickness="1"
-                Margin="0">
-            <Label Text="Controls — Task 4"
-                   TextColor="#A0A8C0"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center" />
-        </Border>
+             <Border
+              Grid.Column="1"
+              Grid.Row="0"
+              BackgroundColor="#12122A"
+              Stroke="#2D2D44"
+              StrokeThickness="1"
+              >
+              <ScrollView VerticalScrollBarVisibility="Default">
+
+              </ScrollView>
+             </Border>
        </Grid>
 
 </ContentPage>
