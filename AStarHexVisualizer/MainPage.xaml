@@ -22,7 +22,33 @@
               StrokeThickness="1"
               >
               <ScrollView VerticalScrollBarVisibility="Default">
-
+                  <VerticalStackLayout Padding="16" Spacing="0">
+                        <Label
+                              Text="A* Hex Visualizer"
+                              FontSize="16"
+                              TextColor="#E8E8F0"  
+                              Margin="0,0,0,4"
+                              FontAttributes="Bold"    
+                        />
+                        <Label
+                              Text="Step-by-step pathfinding"
+                              FontSize="11"
+                              TextColor="#A0A8C0"  
+                              Margin="0,0,0,24"
+                        />
+                        <BoxView 
+                              HeightRequest="1"
+                              Margin="0,0,0,24"
+                              BackgroundColor="#2D2D44"      
+                        />
+                        <Label
+                              Text="SCENARIO"
+                              FontSize="10"
+                              TextColor="#A0A8C0"  
+                              Margin="0,0,0,8"
+                              CharacterSpacing="2"
+                        />
+                  </VerticalStackLayout>
               </ScrollView>
              </Border>
        </Grid>
