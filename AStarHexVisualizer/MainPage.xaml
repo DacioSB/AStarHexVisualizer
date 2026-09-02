@@ -48,6 +48,74 @@
                               Margin="0,0,0,8"
                               CharacterSpacing="2"
                         />
+                        <Border BackgroundColor="#1A1A2E"
+                              Stroke="#2D2D44"
+                              StrokeThickness="1"
+                              StrokeShape="RoundRectangle 6"
+                              Padding="12,10"
+                              Margin="0,0,0,24"
+                        >
+                              <Label
+                                    Text="Rock Maze"
+                                    FontSize="13"
+                                    TextColor="#E8E8F0"  
+                                    x:Name="ScenarioLabel"
+                              />
+                        </Border>
+                        <BoxView 
+                              HeightRequest="1"
+                              Margin="0,0,0,24"
+                              BackgroundColor="#2D2D44"      
+                        />
+                        <Label
+                              Text="CONTROLS"
+                              FontSize="10"
+                              TextColor="#A0A8C0"
+                              CharacterSpacing="2" 
+                              Margin="0,0,0,24"
+                        />
+                        <Button
+                              x:Name="StepButton" 
+                              HeightRequest="44"
+                              CornerRadius="6"
+                              FontSize="13"
+                              TextColor="#E8E8F0"
+                              Text="Step Forward ▶"
+                              Margin="0,0,0,8"
+                              BackgroundColor="#1B4F7A"
+                        />
+                        <Button
+                              x:Name="AutoPlayButton" 
+                              HeightRequest="44"
+                              CornerRadius="6"
+                              FontSize="13"
+                              TextColor="#E8E8F0"
+                              Text="Auto Play ⏵"
+                              Margin="0,0,0,8"
+                              BackgroundColor="#0D3352"
+                        />
+                        <Button
+                              x:Name="ResetButton" 
+                              HeightRequest="44"
+                              CornerRadius="6"
+                              FontSize="13"
+                              TextColor="#E8E8F0"
+                              Text="Reset ↺"
+                              Margin="0,0,0,24"
+                              BackgroundColor="#2A2A3E"
+                        />
+                        <BoxView 
+                              HeightRequest="1"
+                              Margin="0,0,0,24"
+                              BackgroundColor="#2D2D44"      
+                        />
+                        <Label
+                              Text="ALGORITHM STATE"
+                              FontSize="10"
+                              TextColor="#A0A8C0"
+                              CharacterSpacing="2" 
+                              Margin="0,0,0,24"
+                        />
                   </VerticalStackLayout>
               </ScrollView>
              </Border>
