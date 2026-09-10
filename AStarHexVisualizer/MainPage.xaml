@@ -116,6 +116,170 @@
                               CharacterSpacing="2" 
                               Margin="0,0,0,24"
                         />
+                        <Grid ColumnDefinitions="*, *"
+                          RowDefinitions="Auto,Auto,Auto,Auto"
+                          RowSpacing="8"
+                          ColumnSpacing="8"
+                          Margin="0,0,0,24">
+                              <Label Grid.Row="0" Grid.Column="0"
+                                    Text="Step"
+                                    TextColor="#A0A8C0" FontSize="11" />
+                              <Label Grid.Row="0" Grid.Column="1"
+                                    x:Name="StepCountLabel"
+                                    Text="—"
+                                    TextColor="#E8E8F0" FontSize="11"
+                                    HorizontalOptions="End" />
+                              <Label Grid.Row="1" Grid.Column="0"
+                                    Text="Open"
+                                    TextColor="#A0A8C0" FontSize="11" />
+                              <Label Grid.Row="1" Grid.Column="1"
+                                    x:Name="OpenListLabel"
+                                    Text="—"
+                                    TextColor="#1B4F7A" FontSize="11"
+                                    HorizontalOptions="End" />
+                              <Label Grid.Row="2" Grid.Column="0"
+                                    Text="Closed"
+                                    TextColor="#A0A8C0" FontSize="11" />
+                              <Label Grid.Row="2" Grid.Column="1"
+                                    x:Name="ClosedListLabel"
+                                    Text="—"
+                                    TextColor="#0D3352" FontSize="11"
+                                    HorizontalOptions="End" />
+                              <Label Grid.Row="3" Grid.Column="0"
+                                    Text="Status"
+                                    TextColor="#A0A8C0" FontSize="11" />
+                              <Label Grid.Row="3" Grid.Column="1"
+                                    x:Name="StatusLabel"
+                                    Text="Ready"
+                                    TextColor="#27AE60" FontSize="11"
+                                    HorizontalOptions="End" />
+                        </Grid>
+                        <BoxView 
+                              HeightRequest="1"
+                              Margin="0,0,0,24"
+                              BackgroundColor="#2D2D44"      
+                        />
+                        <Label
+                              Text="LEGEND"
+                              FontSize="10"
+                              TextColor="#A0A8C0"
+                              CharacterSpacing="2" 
+                              Margin="0,0,0,12"
+                        />
+                        <VerticalStackLayout Spacing="6">
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#27AE60"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Start"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#E74C3C"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Goal"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#1B4F7A"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Open list"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#0D3352"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Closed list"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#D4A017"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Final path"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#4A3728"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Rock (blocked)"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                              <HorizontalStackLayout Spacing="8">
+                                    <BoxView
+                                          HeightRequest="14"
+                                          WidthRequest="14"
+                                          BackgroundColor="#2D4A2D"
+                                          CornerRadius="2"
+                                          VerticalOptions="Center"
+                                    />
+                                    <Label 
+                                          TextColor="#A0A8C0"
+                                          FontSize="11"
+                                          HorizontalOptions="Start"
+                                          Text="Slime (cost x3)"
+                                          VerticalOptions="Center"
+                                    />
+                              </HorizontalStackLayout>
+                        </VerticalStackLayout>
                   </VerticalStackLayout>
               </ScrollView>
              </Border>
