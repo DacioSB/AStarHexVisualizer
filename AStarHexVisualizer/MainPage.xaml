@@ -13,6 +13,7 @@
               BackgroundColor="#1A1A2E"
               HorizontalOptions="Fill"
               VerticalOptions="Fill"
+	      SizeChanged="OnCanvasSizeChanged"
              />
              <Border
               Grid.Column="1"

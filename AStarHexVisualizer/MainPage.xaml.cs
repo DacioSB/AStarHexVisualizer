@@ -52,33 +52,31 @@ public partial class MainPage : ContentPage
     private void UpdateTileSize()
     {
         if (_grid is null || HexCanvas.Height <= 0 || HexCanvas.Width <= 0)
-        {
             return;
-        }
-        // the visible part of the tiles grid will have 16px of padding in all directions
-        //so the available size is the width - 16px*2 (right and left) height - 16px*2 (up and down)
-        var padding = 16f;
-        var availableW = (float) HexCanvas.Width - padding * 2;
-        var availableH = (float) HexCanvas.Height - padding * 2;
 
-        var tileSize = 10f;
-        for (float candidate = 10f; candidate < 80f; candidate += 1f)
-        {
-            var size = HexGeometryHelper.GetGridPixelSize(_grid.Cols, _grid.Rows, candidate);
+        const float padding = 16f;
 
-            if (size.Width <= availableW && size.Height <= availableH)
-            {
-                tileSize = candidate;
-            }
-            else
-            {
-                break;
-            }
-        }
+        var availableW = (float)HexCanvas.Width  - padding * 2;
+        var availableH = (float)HexCanvas.Height - padding * 2;
+
+        if (availableW <= 0 || availableH <= 0)
+            return;
+
+        // Task 2: largest tile size that fits both axes
+        var tileSize = CanvasLayoutHelper.ComputeBestTileSize(
+            _grid.Cols, _grid.Rows, availableW, availableH);
+
+        // Task 1: exact drawn size at that tile size
+        var gridSize = HexGeometryHelper.GetGridPixelSize(
+            _grid.Cols, _grid.Rows, tileSize);
+
+        // Task 3: center the grid, balancing slack on both axes
+        var (offsetX, offsetY) = CanvasLayoutHelper.ComputeCenteringOffsets(
+            gridSize.Width, gridSize.Height, availableW, availableH, padding);
 
         _drawable.TileSize = tileSize;
-        _drawable.OffsetX = padding;
-        _drawable.OffsetY = padding;
+        _drawable.OffsetX  = offsetX;
+        _drawable.OffsetY  = offsetY;
     }
 
     private void UpdateInfoPanel()

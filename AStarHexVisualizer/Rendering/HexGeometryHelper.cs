@@ -94,12 +94,15 @@ public static class HexGeometryHelper
     /// </summary>
     public static HexSize GetGridPixelSize(int cols, int rows, float tileSize)
     {
+        if (cols <= 0 || rows <= 0 ) return new HexSize(0f, 0f);
         var hexWidth  = HexWidth(tileSize);
         var hexHeight = HexHeight(tileSize);
         var vertStep  = VerticalStep(tileSize);
 
-        var width  = cols * hexWidth + hexWidth / 2f + tileSize * 2f;
-        var height = rows * vertStep + hexHeight / 2f + hexHeight;
+        var oddShift = rows > 1 ? hexWidth / 2f : 0f;
+
+        var width  = (cols - 1) * hexWidth + oddShift + hexWidth;
+        var height = (rows - 1) * vertStep + hexHeight;
 
         return new HexSize(width, height);
     }
