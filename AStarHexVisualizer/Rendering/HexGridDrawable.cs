@@ -27,7 +27,7 @@ public class HexGridDrawable : IDrawable
     public HexTile?   CurrentTile { get; set; }  // tile being evaluated this step
 
     // ── Font sizes ────────────────────────────────────────────
-    private const float LabelFontSize  = 13f;  // S, G, emoji
+    private const float LabelFontSize  = 18f;  // S, G, emoji
     private const float FValueFontSize = 11f;  // f(n) value — prominent
     private const float GHFontSize     =  8f;  // g and h — small supporting info
 
