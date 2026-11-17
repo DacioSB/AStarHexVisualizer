@@ -17,6 +17,15 @@ namespace AStarHexVisualizer.Rendering;
 /// </summary>
 public class HexGridDrawable : IDrawable
 {
+    // ── Illustrations ─────────────────────────────────────────
+
+    private static readonly Color RockBase      = Color.FromArgb("#7A6A5A");
+    private static readonly Color RockLight     = Color.FromArgb("#A39280");
+    private static readonly Color RockDark      = Color.FromArgb("#54463A");
+    private static readonly Color RockOutline   = Color.FromArgb("#2E241C");
+    private static readonly Color SlimeBody     = Color.FromArgb("#6FD04F");
+    private static readonly Color SlimeOutline  = Color.FromArgb("#2F6B1E");
+    private static readonly Color ShadowColor   = Color.FromArgb("#000000").WithAlpha(0.35f);
     // ── Configuration ─────────────────────────────────────────
     public float TileSize     { get; set; } = HexGeometryHelper.DefaultTileSize;
     public float OffsetX      { get; set; } = 0f;
@@ -107,17 +116,15 @@ public class HexGridDrawable : IDrawable
         // Rocks — emoji label, no values
         if (tile.Type == TileType.Rock)
         {
-            DrawCenteredText(canvas, center, "🪨",
-                TileColors.TextPrimary, LabelFontSize, bold: false);
+            DrawRock(canvas, center);
             return;
         }
 
-        // Unvisited tiles — show slime emoji only
+        // Unvisited tiles: slime gets its illustration, others stay empty
         if (tile.State == TileState.Unvisited)
         {
             if (tile.Type == TileType.Slime)
-                DrawCenteredText(canvas, center, "🟢",
-                    TileColors.TextPrimary, LabelFontSize, bold: false);
+                DrawSlime(canvas, center);
             return;
         }
 
@@ -227,5 +234,98 @@ public class HexGridDrawable : IDrawable
 
         path.Close();
         return path;
+    }
+
+    /// <summary>
+    /// Faceted boulder: light facet top-left, dark facet bottom-right.
+    /// All coordinates are in units of TileSize, relative to the hex center.
+    /// </summary>
+    private void DrawRock(ICanvas canvas, HexPoint c)
+    {
+        var s = TileSize;
+
+        PathF Poly(params (float x, float y)[] pts)
+        {
+            var p = new PathF();
+            p.MoveTo(c.X + pts[0].x * s, c.Y + pts[0].y * s);
+            for (var i = 1; i < pts.Length; i++)
+                p.LineTo(c.X + pts[i].x * s, c.Y + pts[i].y * s);
+            p.Close();
+            return p;
+        }
+
+        // Ground shadow
+        canvas.FillColor = ShadowColor;
+        canvas.FillEllipse(c.X - 0.50f * s, c.Y + 0.26f * s, 1.00f * s, 0.22f * s);
+
+        // Silhouette
+        var outline = Poly(
+            (-0.52f, 0.28f), (-0.40f, -0.12f), (-0.12f, -0.42f), (0.26f, -0.36f),
+            (0.50f, -0.02f), (0.44f, 0.30f), (0.00f, 0.40f));
+
+        canvas.FillColor = RockBase;
+        canvas.FillPath(outline);
+
+        // Light facet (top-left)
+        canvas.FillColor = RockLight;
+        canvas.FillPath(Poly(
+            (-0.40f, -0.12f), (-0.12f, -0.42f), (0.26f, -0.36f), (0.05f, 0.00f)));
+
+        // Dark facet (bottom-right)
+        canvas.FillColor = RockDark;
+        canvas.FillPath(Poly(
+            (0.05f, 0.00f), (0.50f, -0.02f), (0.44f, 0.30f), (0.00f, 0.40f)));
+
+        // Outline
+        canvas.StrokeColor = RockOutline;
+        canvas.StrokeSize  = Math.Max(1f, s * 0.04f);
+        canvas.DrawPath(outline);
+    }
+
+    /// <summary>
+    /// Friendly slime blob with a highlight and two eyes.
+    /// </summary>
+    private void DrawSlime(ICanvas canvas, HexPoint c)
+    {
+        var s = TileSize;
+
+        // Ground shadow
+        canvas.FillColor = ShadowColor;
+        canvas.FillEllipse(c.X - 0.50f * s, c.Y + 0.26f * s, 1.00f * s, 0.20f * s);
+
+        // Body: a dome with a slightly rounded base
+        var body = new PathF();
+        body.MoveTo(c.X - 0.50f * s, c.Y + 0.30f * s);
+        body.CurveTo(c.X - 0.55f * s, c.Y - 0.10f * s,
+                    c.X - 0.30f * s, c.Y - 0.40f * s,
+                    c.X,             c.Y - 0.40f * s);
+        body.CurveTo(c.X + 0.30f * s, c.Y - 0.40f * s,
+                    c.X + 0.55f * s, c.Y - 0.10f * s,
+                    c.X + 0.50f * s, c.Y + 0.30f * s);
+        body.CurveTo(c.X + 0.35f * s, c.Y + 0.38f * s,
+                    c.X - 0.35f * s, c.Y + 0.38f * s,
+                    c.X - 0.50f * s, c.Y + 0.30f * s);
+        body.Close();
+
+        canvas.FillColor = SlimeBody;
+        canvas.FillPath(body);
+
+        canvas.StrokeColor = SlimeOutline;
+        canvas.StrokeSize  = Math.Max(1f, s * 0.04f);
+        canvas.DrawPath(body);
+
+        // Glossy highlight
+        canvas.FillColor = Colors.White.WithAlpha(0.45f);
+        canvas.FillEllipse(c.X - 0.32f * s, c.Y - 0.30f * s, 0.22f * s, 0.12f * s);
+
+        // Eyes
+        foreach (var ex in new[] { -0.16f, 0.16f })
+        {
+            canvas.FillColor = Colors.White;
+            canvas.FillEllipse(c.X + (ex - 0.09f) * s, c.Y - 0.12f * s, 0.18f * s, 0.18f * s);
+
+            canvas.FillColor = Color.FromArgb("#1A1A2E");
+            canvas.FillEllipse(c.X + (ex - 0.035f) * s, c.Y - 0.06f * s, 0.08f * s, 0.08f * s);
+        }
     }
 }

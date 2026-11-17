@@ -1,11 +1,13 @@
 ﻿using AStarHexVisualizer.Algorithm;
 using AStarHexVisualizer.Domain;
 using AStarHexVisualizer.Rendering;
+using AStarHexVisualizer.ViewModels;
 
 namespace AStarHexVisualizer;
 
 public partial class MainPage : ContentPage
 {
+    private const ScenarioType DefaultScenario = ScenarioType.RockMaze;
 	private readonly HexGridDrawable _drawable = new();
     private readonly AStarEngine     _engine   = new();
     private HexGrid?                 _grid;
@@ -15,20 +17,33 @@ public partial class MainPage : ContentPage
 	public MainPage()
 	{
 		InitializeComponent();
-        LoadScenario(ScenarioType.RockMaze);
+
+        var scenarios = ScenarioInfo.All.ToList();
+        ScenarioPicker.ItemsSource   = scenarios;
+        ScenarioPicker.SelectedIndex = scenarios.FindIndex(s => s.Type == DefaultScenario);
+
+        LoadScenario(DefaultScenario);
+
+        ScenarioPicker.SelectedIndexChanged += OnScenarioChanged;
 	}
+    private void OnScenarioChanged(object? sender, EventArgs e)
+    {
+        if (ScenarioPicker.SelectedItem is not ScenarioInfo info)
+            return;
+
+        LoadScenario(info.Type);
+    }
 	private void LoadScenario(ScenarioType scenario)
     {
         _grid = GridFactory.Create(scenario);
 
         _stepCount = 0;
 
-        //engine init
-        //drawable grid is the grid we created
-        //da um update no grid
-
         _engine.Initialize(_grid, _grid.StartTile!, _grid.GoalTile!);
         _drawable.Grid = _grid;
+        _drawable.CurrentTile = null;
+        ScenarioDescriptionLabel.Text = ScenarioInfo.For(scenario).Description;
+        
         UpdateTileSize();
 
         HexCanvas.Drawable = _drawable;
@@ -81,12 +96,6 @@ public partial class MainPage : ContentPage
 
     private void UpdateInfoPanel()
     {
-        //primeiro digo que StepCountLabel é "-" se o stepcount for 0, se não, eu coloco o valor do stepcount.tostring
-        //OpenListLabel e ClosedListLabel e setar para o tamanho da lista de abertos e fechados na engine (tostring)
-        //se engine is finished e achou o goal, então StatusLabel texto vai ser Path Found! ✓ e cor #27AE60
-        //se não "No Path ✗" e #E74C3C
-        //se nao ta finished, ou step count é zero e eu coloco statuslabel para Ready ou ta procurando Searching…
-        //Color.FromArgb(#A0A8C0)
 
         StepCountLabel.Text = _stepCount == 0 ? "-" : _stepCount.ToString();
         OpenListLabel.Text = _engine.OpenList.Count.ToString();

@@ -53,16 +53,22 @@
                               Stroke="#2D2D44"
                               StrokeThickness="1"
                               StrokeShape="RoundRectangle 6"
-                              Padding="12,10"
-                              Margin="0,0,0,24"
+                              Padding="8,0"
+                              Margin="0,0,0,8"
                         >
-                              <Label
-                                    Text="Rock Maze"
+                              <Picker 
+                                    x:Name="ScenarioPicker"
+                                    Title="Select scenario"
+                                    TitleColor="#A0A8C0"
+                                    TextColor="#E8E8F0"
+                                    BackgroundColor="Transparent"
                                     FontSize="13"
-                                    TextColor="#E8E8F0"  
-                                    x:Name="ScenarioLabel"
                               />
                         </Border>
+                        <Label x:Name="ScenarioDescriptionLabel"
+                              TextColor="#A0A8C0"
+                              FontSize="11"
+                              Margin="0,0,0,24" />
                         <BoxView 
                               HeightRequest="1"
                               Margin="0,0,0,24"

@@ -30,6 +30,7 @@
     <Compile Include="..\AStarHexVisualizer\Rendering\HexGeometryHelper.cs" />
     <Compile Include="..\AStarHexVisualizer\Rendering\HexPoint.cs" />
     <Compile Include="..\AStarHexVisualizer\Rendering\HexSize.cs" />
+    <Compile Include="..\AStarHexVisualizer\ViewModels\*.cs" />
   </ItemGroup>
 
 </Project>
